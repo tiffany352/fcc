@@ -319,3 +319,32 @@ string toString(int i, int base = 10) {
   }
   raise new Error "toString(base => $base) not supported";
 }
+
+int toInt(string str, int base=10) {
+  import std.math;
+  if base==10
+    return atoi(str);
+  if base==2 {
+    int n=0;
+    for (int i=str.length-1;i>=0;i--) {
+      int d = (str[i]=="1");
+      int p = str.length-i;
+      if d
+        n += d * int:pow(2,p-1);
+    }
+    return n;
+  }
+  
+  string nums="0123456789abcdefghijklmnopqrstuvwxyz";
+  int n=0;
+  
+  for (int i=str.length-1;i>=0;i--) {
+    int d = nums.find "$(str[i])";
+    int p = str.length-i;
+    
+    n += d * int:pow(base,p-1);
+  }
+  
+  return n;
+}
+
